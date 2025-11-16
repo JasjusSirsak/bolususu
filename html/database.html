@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights - Database</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/database.css">
+    <script src="../auth/auth.js"></script> 
+    <script src="../scripts/api-client.js" defer></script>
+    <script src="../components/sidebar.js" defer></script>
+    <script src="../components/header.js" defer></script>
+    <script src="../scripts/database.js" defer></script>
+    <!-- Base Styles -->
+    <link rel="stylesheet" href="../css/base.css">
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="../components/sidebar.css">
+    <link rel="stylesheet" href="../components/header.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar will be loaded here dynamically -->
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <div class="header">
+                <div class="burger-menu">
+                    <i class="bi bi-list"></i>
+                </div>
+            </div>
+            
+            <!-- Database Content -->
+            <div id="databaseContent" class="database-content">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Section -->
+    <div class="loading-section" id="loadingSection">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p class="loading-text">Loading database entries...</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="../scripts/database.js"></script>
+</body>
+</html>

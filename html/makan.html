@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Viewer - PostgreSQL</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body { 
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+
+    h1 {
+      color: #2d3748;
+      margin-bottom: 10px;
+      font-size: 2em;
+    }
+
+    #status {
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    #status.loading {
+      background: #fef3c7;
+      color: #92400e;
+      border-left: 4px solid #f59e0b;
+    }
+
+    #status.success {
+      background: #d1fae5;
+      color: #065f46;
+      border-left: 4px solid #10b981;
+    }
+
+    #status.error {
+      background: #fee2e2;
+      color: #991b1b;
+      border-left: 4px solid #ef4444;
+    }
+
+    .data-section {
+      margin: 30px 0;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 20px;
+      font-size: 1.3em;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .row-count {
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+
+    th {
+      background: #f9fafb;
+      color: #374151;
+      font-weight: 600;
+      padding: 12px 15px;
+      text-align: left;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 2px solid #e5e7eb;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #f3f4f6;
+      color: #1f2937;
+    }
+
+    tr:hover {
+      background: #f9fafb;
+    }
+
+    .json-toggle {
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9em;
+      margin-left: 10px;
+      transition: all 0.2s;
+    }
+
+    .json-toggle:hover {
+      background: #4f46e5;
+      transform: translateY(-1px);
+    }
+
+    .json-container {
+      display: none;
+      background: #1e293b;
+      color: #cbd5e1;
+      padding: 20px;
+      overflow-x: auto;
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre;
+    }
+
+    .json-container.show {
+      display: block;
+    }
+
+    .refresh-btn {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 500;
+      margin: 20px 0;
+      transition: all 0.2s;
+    }
+
+    .refresh-btn:hover {
+      background: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .api-info {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 20px 0;
+      font-size: 0.9em;
+      color: #1e40af;
+    }
+
+    .api-info strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1.1em;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 1.5em;
+      }
+      
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Data Viewer - PostgreSQL</h1>
+    <div class="api-info">
+      <strong>🔌 API Endpoint:</strong>
+      <span id="apiUrl">http://localhost:3000</span>
+    </div>
+    
+    <button class="refresh-btn" onclick="loadAllData()">🔄 Refresh Data</button>
+    <div id="status" class="loading">Memuat data dari database...</div>
+    
+    <div id="tables"></div>
+  </div>
+
+  <script>
+    // Konfigurasi API endpoint (ubah sesuai deployment)
+    const API_BASE_URL = 'http://localhost:3000';
+    
+    document.getElementById('apiUrl').textContent = API_BASE_URL;
+
+    const tablesContainer = document.getElementById('tables');
+    const statusDiv = document.getElementById('status');
+
+    // Fungsi untuk memuat data dari API
+    async function loadTableData(tableName, endpoint) {
+      try {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        
+        if (!result.success) {
+          throw new Error(result.error || 'Gagal mengambil data');
+        }
+        
+        return result.data;
+      } catch (error) {
+        console.error(`Error loading ${tableName}:`, error);
+        throw error;
+      }
+    }
+
+    // Fungsi untuk render tabel
+    function renderTable(title, data, tableId) {
+      if (!data || data.length === 0) {
+        const noData = document.createElement('div');
+        noData.className = 'data-section';
+        noData.innerHTML = `
+          <div class="section-header">
+            ${title}
+            <span class="row-count">0 rows</span>
+          </div>
+          <div style="padding: 20px; text-align: center; color: #6b7280;">
+            Tidak ada data tersedia
+          </div>
+        `;
+        tablesContainer.appendChild(noData);
+        return;
+      }
+
+      const section = document.createElement('div');
+      section.className = 'data-section';
+      
+      // Header dengan jumlah rows
+      const header = document.createElement('div');
+      header.className = 'section-header';
+      header.innerHTML = `
+        <span>${title}</span>
+        <div>
+          <span class="row-count">${data.length} rows</span>
+          <button class="json-toggle" onclick="toggleJson('${tableId}')">
+            { } JSON
+          </button>
+        </div>
+      `;
+      section.appendChild(header);
+
+      // Wrapper untuk tabel
+      const wrapper = document.createElement('div');
+      wrapper.className = 'table-wrapper';
+
+      // Buat tabel
+      const table = document.createElement('table');
+      const thead = document.createElement('thead');
+      const tbody = document.createElement('tbody');
+
+      // Ambil semua kolom (kecuali yang _airbyte untuk tampilan lebih bersih)
+      const allKeys = Object.keys(data[0]);
+      const displayKeys = allKeys.filter(k => !k.startsWith('_airbyte'));
+      
+      // Header tabel
+      const headerRow = document.createElement('tr');
+      displayKeys.forEach(key => {
+        const th = document.createElement('th');
+        th.textContent = key;
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      // Body tabel
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        displayKeys.forEach(key => {
+          const td = document.createElement('td');
+          const value = row[key];
+          
+          // Format nilai
+          if (value === null || value === undefined) {
+            td.textContent = '-';
+            td.style.color = '#9ca3af';
+          } else if (typeof value === 'object') {
+            td.textContent = JSON.stringify(value);
+          } else {
+            td.textContent = value;
+          }
+          
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+
+      wrapper.appendChild(table);
+      section.appendChild(wrapper);
+
+      // JSON viewer (hidden by default)
+      const jsonContainer = document.createElement('div');
+      jsonContainer.className = 'json-container';
+      jsonContainer.id = `json-${tableId}`;
+      jsonContainer.textContent = JSON.stringify(data, null, 2);
+      section.appendChild(jsonContainer);
+
+      tablesContainer.appendChild(section);
+    }
+
+    // Toggle JSON viewer
+    function toggleJson(tableId) {
+      const jsonEl = document.getElementById(`json-${tableId}`);
+      jsonEl.classList.toggle('show');
+    }
+
+    // Fungsi utama untuk load semua data
+    async function loadAllData() {
+      // Clear previous content
+      tablesContainer.innerHTML = '';
+      statusDiv.textContent = 'Memuat data dari database...';
+      statusDiv.className = 'loading';
+
+      try {
+        // Load data dari kedua tabel secara parallel
+        const [aktifData, aktif2Data] = await Promise.all([
+          loadTableData('Aktif', '/api/aktif'),
+          loadTableData('Aktif2', '/api/aktif2')
+        ]);
+
+        // Render kedua tabel
+        renderTable('📋 Tabel: Aktif', aktifData, 'aktif');
+        renderTable('📋 Tabel: Aktif2', aktif2Data, 'aktif2');
+
+        statusDiv.textContent = `✅ Berhasil memuat data (${aktifData.length + aktif2Data.length} total rows)`;
+        statusDiv.className = 'success';
+
+      } catch (error) {
+        console.error('Error loading data:', error);
+        statusDiv.textContent = `❌ Gagal memuat data: ${error.message}`;
+        statusDiv.className = 'error';
+        
+        // Tampilkan pesan error yang lebih detail
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = 'background:#fee2e2; padding:20px; border-radius:8px; margin:20px 0; color:#991b1b;';
+        errorDiv.innerHTML = `
+          <h3 style="margin-bottom:10px;">⚠️ Troubleshooting:</h3>
+          <ul style="margin-left:20px; line-height:1.8;">
+            <li>Pastikan API server sudah berjalan di <code>${API_BASE_URL}</code></li>
+            <li>Jalankan: <code>node index.js</code> di folder API</li>
+            <li>Cek koneksi database di file <code>.env</code></li>
+            <li>Buka browser console (F12) untuk detail error</li>
+          </ul>
+        `;
+        tablesContainer.appendChild(errorDiv);
+      }
+    }
+
+    // Auto-load saat halaman dibuka
+    loadAllData();
+  </script>
+</body>
+</html>

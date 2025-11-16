@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights - Home</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+    
+    <!-- Scripts (defer untuk performance) -->
+    <script src="../auth/auth.js"></script> 
+    <script src="../scripts/api-client.js" defer></script>
+    <script src="../components/sidebar.js" defer></script>
+    <script src="../components/header.js" defer></script>
+    <script src="../scripts/home.js" defer></script>
+
+    <!-- Base Styles -->
+    <link rel="stylesheet" href="../css/base.css">
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="../components/sidebar.css">
+    <link rel="stylesheet" href="../components/header.css">
+    <link rel="stylesheet" href="../css/home.css">
+</head>
+
+<body>
+    <!-- Sidebar will be injected here by sidebar.js -->
+    <!-- Header will be injected here by header.js -->
+    
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <!-- Greeting Box -->
+            <div class="greeting-box">
+                <div class="greeting-content">
+                    <h2>Hello, <span id="greetingName">Ariel</span></h2>
+                    <p id="greetingSubtext">Time to explore your data.</p>
+                </div>
+            </div>
+
+            <!-- Home Grid: Projects + Members side by side -->
+            <div class="home-grid">
+                <!-- Left Column: Recent Projects -->
+                <div class="projects-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="bi bi-clock-history"></i>
+                            <span>Pick up where you left off</span>
+                        </h3>
+                        <span class="section-meta" id="projectsCount">5 projects</span>
+                    </div>
+                    
+                    <div class="recent-items-grid" id="recentItemsGrid">
+                        <!-- Recent projects will be populated here by JS -->
+                    </div>
+                </div>
+
+                <!-- Right Column: Team Members -->
+                <div class="members-section">
+                    <div class="members-header">
+                        <h3 class="members-title">
+                            <i class="bi bi-people-fill"></i>
+                            <span>Team Members</span>
+                        </h3>
+                        <span class="members-count" id="membersCount">8</span>
+                    </div>
+                    
+                    <div class="members-list" id="membersList">
+                        <!-- Team members will be populated here by JS -->
+                    </div>
+
+                    <button class="add-team-btn" onclick="handleAddTeamClick()">
+                        <i class="bi bi-plus-circle-fill"></i>
+                        <span>Add Team Member</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

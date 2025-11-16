@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights - Settings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/settings.css">
+    <script src="../scripts/api-client.js"></script>
+    <script src="../components/sidebar.js" defer></script>
+    <script src="../components/header.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar will be loaded here dynamically -->
+        
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Settings Header - Custom -->
+            <div class="settings-header">
+                <div class="settings-header-content">
+                    <h1 class="settings-title">
+                        <i class="bi bi-gear"></i>
+                        Settings
+                    </h1>
+                    <p class="settings-subtitle">Manage your preferences and account settings</p>
+                </div>
+                <div class="burger-menu">
+                    <i class="bi bi-list"></i>
+                </div>
+            </div>
+
+            <!-- User Profile Modal/Drawer -->
+            <div class="profile-modal" id="profileModal">
+                <div class="profile-modal-content">
+                    <div class="profile-header">
+                        <button class="profile-close-btn" onclick="closeProfileModal()" title="Close profile modal">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                        <div class="profile-avatar-large" id="profileAvatarLarge">AD</div>
+                        <h2 class="profile-name" id="profileName">Ariel Design</h2>
+                        <p class="profile-email" id="profileEmail">ariel@insight.com</p>
+                    </div>
+                    <div class="profile-body">
+                        <div class="profile-field">
+                            <label class="profile-field-label">Role</label>
+                            <div class="profile-field-value">
+                                <i class="bi bi-shield-check"></i>
+                                <span id="profileRoleBadge">Admin</span>
+                            </div>
+                        </div>
+                        <div class="profile-field">
+                            <label class="profile-field-label">Member Since</label>
+                            <div class="profile-field-value">
+                                <i class="bi bi-calendar3"></i>
+                                <span id="profileJoinDate">November 12, 2025</span>
+                            </div>
+                        </div>
+                        <div class="profile-field">
+                            <label class="profile-field-label">Status</label>
+                            <div class="profile-field-value">
+                                <i class="bi bi-dot status-active"></i>
+                                <span>Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="profile-btn profile-btn-secondary" onclick="alert('Settings coming soon!')">
+                            <i class="bi bi-gear"></i> Settings
+                        </button>
+                        <button class="profile-btn profile-btn-secondary" onclick="alert('Logout coming soon!')">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="settings-content">
+                <!-- Account Settings -->
+                <section class="settings-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="bi bi-person"></i>
+                            Account Settings
+                        </h2>
+                    </div>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" value="Ariel Design" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" value="ariel@insight.com" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" value="+1 (555) 123-4567" placeholder="Enter your phone number">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Department</label>
+                            <input type="text" class="form-input" value="Design & Analytics" placeholder="Enter your department">
+                        </div>
+                        <button class="btn-primary">
+                            <i class="bi bi-check-circle"></i> Save Changes
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Preferences -->
+                <section class="settings-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="bi bi-sliders"></i>
+                            Preferences
+                        </h2>
+                    </div>
+                    <div class="settings-form">
+                        <div class="form-group-toggle">
+                            <label for="darkMode" class="toggle-label">
+                                <span class="toggle-title">Dark Mode</span>
+                                <span class="toggle-description">Use dark theme across the application</span>
+                            </label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkMode">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group-toggle">
+                            <label for="emailNotifications" class="toggle-label">
+                                <span class="toggle-title">Email Notifications</span>
+                                <span class="toggle-description">Receive email updates about your data</span>
+                            </label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="emailNotifications" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group-toggle">
+                            <label for="desktopNotifications" class="toggle-label">
+                                <span class="toggle-title">Desktop Notifications</span>
+                                <span class="toggle-description">Show desktop notifications for important events</span>
+                            </label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="desktopNotifications" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="language" class="form-label">Language</label>
+                            <select id="language" class="form-select">
+                                <option value="en">English</option>
+                                <option value="id">Bahasa Indonesia</option>
+                                <option value="es">Español</option>
+                                <option value="fr">Français</option>
+                                <option value="de">Deutsch</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="timezone" class="form-label">Timezone</label>
+                            <select id="timezone" class="form-select">
+                                <option value="utc-7">UTC-7 (PDT)</option>
+                                <option value="utc-5">UTC-5 (EDT)</option>
+                                <option value="utc-5">UTC-5 (EDT)</option>
+                                <option value="utc+0">UTC+0 (GMT)</option>
+                                <option value="utc+1">UTC+1 (CET)</option>
+                                <option value="utc+8">UTC+8 (SGT)</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Security -->
+                <section class="settings-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="bi bi-shield-lock"></i>
+                            Security
+                        </h2>
+                    </div>
+                    <div class="settings-form">
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h3>Change Password</h3>
+                                <p>Update your password regularly to keep your account secure</p>
+                            </div>
+                            <button class="btn-secondary">
+                                <i class="bi bi-lock"></i> Change Password
+                            </button>
+                        </div>
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h3>Two-Factor Authentication</h3>
+                                <p>Add an extra layer of security to your account</p>
+                            </div>
+                            <button class="btn-secondary">
+                                <i class="bi bi-shield-check"></i> Enable 2FA
+                            </button>
+                        </div>
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h3>Active Sessions</h3>
+                                <p>View and manage your active login sessions</p>
+                            </div>
+                            <button class="btn-secondary">
+                                <i class="bi bi-diagram-3"></i> View Sessions
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Danger Zone -->
+                <section class="settings-section danger-zone">
+                    <div class="section-header">
+                        <h2 class="section-title danger-title">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            Danger Zone
+                        </h2>
+                    </div>
+                    <div class="settings-form">
+                        <div class="danger-item">
+                            <div class="danger-info">
+                                <h3>Delete Account</h3>
+                                <p>Permanently delete your account and all associated data. This action cannot be undone.</p>
+                            </div>
+                            <button class="btn-danger">
+                                <i class="bi bi-trash"></i> Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/home.js"></script>
+    <script src="../scripts/settings.js"></script>
+</body>
+</html>

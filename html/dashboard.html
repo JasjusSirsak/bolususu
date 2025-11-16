@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight - Dashboards</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+    <script src="../auth/auth.js"></script> 
+    <script src="../scripts/api-client.js" defer></script>
+    <script src="../components/sidebar.js" defer></script>
+    <script src="../components/header.js" defer></script>
+    <script src="../scripts/dashboard.js"></script>
+    <script src="../scripts/modal.js" defer></script>
+
+    <!-- Base Styles -->
+    <link rel="stylesheet" href="../css/base.css">
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="../components/sidebar.css">
+    <link rel="stylesheet" href="../components/header.css">
+    
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <style>
+        .hidden-page {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar will be loaded here dynamically -->
+        <!-- Header will be injected here by header.js -->
+
+        <!-- MAIN DASHBOARD LIST PAGE -->
+        <div id="dashboardListPage">
+            <div class="dashboard-page">
+                <div class="dashboard-container">
+                    <!-- Header with Title and Create Button -->
+                    <div class="dashboards-header">
+                        <h1>Dashboards</h1>
+                        <button class="create-dashboard-btn" id="createDashboardBtn">
+                            <i class="bi bi-plus-lg"></i>
+                            <span>Create Dashboard</span>
+                        </button>
+                    </div>
+
+                    <!-- Dashboards Grid -->
+                    <div id="dashboardsGrid" class="dashboards-grid">
+                        <!-- Dashboard cards will be loaded here -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="emptyState" class="empty-state hidden-page">
+                        <div class="empty-state-icon">
+                            <i class="bi bi-inbox"></i>
+                        </div>
+                        <h2>No dashboards yet</h2>
+                        <p>Create your first dashboard to get started with data visualization</p>
+                        <button class="create-dashboard-btn" id="createDashboardBtnEmpty">
+                            <i class="bi bi-plus-lg"></i>
+                            <span>Create Dashboard</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW PAGE -->
+        <div id="dashboardViewPage" class="hidden-page">
+            <div class="dashboard-view-page">
+                <div class="dashboard-view-container">
+                    <!-- Dashboard Header -->
+                    <div class="dashboard-view-header">
+                        <div class="dashboard-view-info">
+                            <h1 id="dashboardViewTitle">Dashboard Name</h1>
+                            <p class="description" id="dashboardViewDescription">Dashboard description goes here</p>
+                            <div class="meta">
+                                <span id="dashboardViewOwner">Owner: You</span>
+                                <span id="dashboardViewCreated">Created 2 days ago</span>
+                            </div>
+                        </div>
+                        <div class="dashboard-view-actions">
+                            <button class="back-btn" id="backToDashboardsBtn">
+                                <i class="bi bi-arrow-left"></i>
+                                <span>Back</span>
+                            </button>
+                            <button class="edit-dashboard-btn" id="editDashboardBtn">
+                                <i class="bi bi-pencil"></i>
+                                <span>Edit Dashboard</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Content Area -->
+                    <div class="dashboard-content">
+                        <div class="dashboard-placeholder">
+                            <i class="bi bi-graph-up"></i>
+                            <h3>Charts Coming Soon</h3>
+                            <p>Click "Edit Dashboard" to add charts and visualizations</p>
+                            <button id="editDashboardBtnContent">
+                                <i class="bi bi-pencil"></i>
+                                <span>Start Editing</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATE/EDIT DASHBOARD MODAL -->
+    <div class="modal-overlay" id="createDashboardModal">
+        <div class="modal">
+            <button class="modal-close-btn" id="closeModalBtn" title="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            
+            <div class="modal-header">
+                <h2>Create New Dashboard</h2>
+            </div>
+
+            <form id="dashboardForm">
+                <!-- Dashboard Name -->
+                <div class="form-group">
+                    <label for="dashboardName">
+                        Dashboard Name
+                        <span class="required-badge">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="dashboardName" 
+                        placeholder="e.g., Sales Analysis, Customer Metrics"
+                        required
+                    >
+                </div>
+
+                <!-- Database Selection -->
+                <div class="form-group">
+                    <label for="databaseSelect">
+                        Data Source
+                        <span class="required-badge">*</span>
+                    </label>
+                    <select id="databaseSelect" required>
+                        <option value="">-- Select a database --</option>
+                    </select>
+                    <div class="info-text">Choose which database to use for this dashboard</div>
+                </div>
+
+                <!-- Database Description -->
+                <div class="form-group">
+                    <label for="databaseDescription">Description</label>
+                    <textarea 
+                        id="databaseDescription" 
+                        placeholder="Optional: Add a description for this dashboard..."
+                    ></textarea>
+                    <div class="info-text">Help team members understand the purpose of this dashboard</div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="create-btn" id="submitBtn">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../scripts/api-client.js"></script>
+    <script src="../scripts/sidebar.js"></script>
+    <script src="../scripts/dashboard.js"></script>
+</body>
+</html>
