@@ -1,0 +1,281 @@
+/* =================================================== */
+/* BASE STYLES - GLOBAL */
+/* =================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Zen Antique Soft', serif;
+    background-color: #F7F0DE; /* SEAMLESS dengan sidebar & header */
+    background-image: 
+        linear-gradient(rgba(51, 51, 51, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(51, 51, 51, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: #333;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* =================================================== */
+/* SCROLLBAR STYLING */
+/* =================================================== */
+
+/* Modern Minimalist Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(204, 102, 0, 0.4);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(204, 102, 0, 0.6);
+}
+
+/* Firefox Scrollbar */
+* {
+    scrollbar-color: rgba(204, 102, 0, 0.4) transparent;
+    scrollbar-width: thin;
+}
+
+/* =================================================== */
+/* UTILITY CLASSES */
+/* =================================================== */
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-20 {
+    gap: 20px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+/* =================================================== */
+/* ANIMATIONS */
+/* =================================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.1);
+    }
+}
+
+/* =================================================== */
+/* FOCUS & ACCESSIBILITY */
+/* =================================================== */
+
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #cc6600;
+    outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* =================================================== */
+/* BUTTON BASE STYLES */
+/* =================================================== */
+
+button {
+    font-family: 'Zen Antique Soft', serif;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =================================================== */
+/* LINK BASE STYLES */
+/* =================================================== */
+
+a {
+    color: #cc6600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #b35a00;
+}
+
+/* =================================================== */
+/* RESPONSIVE HELPERS */
+/* =================================================== */
+
+.hide-mobile {
+    display: block;
+}
+
+.show-mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none;
+    }
+
+    .show-mobile {
+        display: block;
+    }
+}
+
+/* =================================================== */
+/* LOADING SPINNER */
+/* =================================================== */
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(204, 102, 0, 0.2);
+    border-top: 4px solid #cc6600;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* =================================================== */
+/* SELECTION */
+/* =================================================== */
+
+::selection {
+    background: rgba(204, 102, 0, 0.3);
+    color: #333;
+}
+
+::-moz-selection {
+    background: rgba(204, 102, 0, 0.3);
+    color: #333;
+}

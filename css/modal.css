@@ -1,0 +1,288 @@
+/* =================================================== */
+/* PRIMARY KEY SELECTION MODAL */
+/* =================================================== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: #F7F0DE;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideUp 0.3s ease;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: 25px 30px;
+    border-bottom: 2px solid rgba(204, 102, 0, 0.2);
+    background: linear-gradient(135deg, rgba(204, 102, 0, 0.05), rgba(212, 165, 116, 0.05));
+}
+
+.modal-header h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.modal-subtitle {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.modal-body {
+    padding: 25px 30px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* Column List */
+.column-list {
+    margin-bottom: 25px;
+}
+
+.column-item {
+    margin-bottom: 12px;
+}
+
+.column-label {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: white;
+    border: 2px solid rgba(204, 102, 0, 0.15);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.column-label:hover {
+    background: rgba(204, 102, 0, 0.05);
+    border-color: #cc6600;
+    transform: translateX(3px);
+}
+
+.column-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+    accent-color: #cc6600;
+}
+
+.column-name {
+    flex: 1;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.column-type {
+    padding: 4px 10px;
+    background: rgba(204, 102, 0, 0.1);
+    color: #cc6600;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Preview Section */
+.preview-section {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 2px solid rgba(204, 102, 0, 0.2);
+}
+
+.preview-section h4 {
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.preview-table-container {
+    max-height: 250px;
+    overflow: auto;
+    background: white;
+    border: 2px solid rgba(204, 102, 0, 0.15);
+    border-radius: 8px;
+}
+
+.preview-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.preview-table thead {
+    position: sticky;
+    top: 0;
+    background: #F7F0DE;
+    z-index: 10;
+}
+
+.preview-table th {
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid rgba(204, 102, 0, 0.3);
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.preview-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(204, 102, 0, 0.1);
+    color: #666;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.preview-table tbody tr:nth-child(even) {
+    background: rgba(204, 102, 0, 0.03);
+}
+
+.preview-table tbody tr:hover {
+    background: rgba(204, 102, 0, 0.08);
+}
+
+/* Modal Footer */
+.modal-footer {
+    padding: 20px 30px;
+    border-top: 2px solid rgba(204, 102, 0, 0.1);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    background: rgba(204, 102, 0, 0.02);
+}
+
+.btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: #cc6600;
+    color: white;
+    border: 2px solid #cc6600;
+}
+
+.btn-primary:hover {
+    background: #b35a00;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(204, 102, 0, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #cc6600;
+    border: 2px solid #cc6600;
+}
+
+.btn-secondary:hover {
+    background: rgba(204, 102, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Scrollbar */
+.modal-body::-webkit-scrollbar,
+.preview-table-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track,
+.preview-table-container::-webkit-scrollbar-track {
+    background: rgba(204, 102, 0, 0.05);
+}
+
+.modal-body::-webkit-scrollbar-thumb,
+.preview-table-container::-webkit-scrollbar-thumb {
+    background: rgba(204, 102, 0, 0.3);
+    border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover,
+.preview-table-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(204, 102, 0, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 20px;
+    }
+
+    .modal-header h3 {
+        font-size: 1.3rem;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .preview-table-container {
+        max-height: 200px;
+    }
+}

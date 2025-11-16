@@ -1,0 +1,141 @@
+/**
+ * LAYOUT CSS
+ * File khusus untuk layout dashboard yang terpisah dari tema
+ */
+
+/* ====================================== */
+/* DASHBOARD LAYOUT STRUCTURE */
+/* ====================================== */
+
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Sidebar Layout */
+.dashboard-sidebar {
+    width: 80px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background: rgba(247, 240, 222, 0.95);
+    border-right: 2px solid rgba(51, 51, 51, 0.2);
+    transition: width 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.dashboard-sidebar:hover {
+    width: 220px;
+}
+
+.dashboard-sidebar.expanded {
+    width: 220px;
+}
+
+/* Main Content Area */
+.dashboard-main {
+    flex: 1;
+    margin-left: 80px;
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+    position: relative;
+}
+
+.dashboard-main.sidebar-expanded {
+    margin-left: 220px;
+}
+
+/* Content Container - FIXED CENTERED LAYOUT */
+.dashboard-content-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 30px 40px;
+}
+
+/* ====================================== */
+/* HEADER LAYOUT FIX */
+/* ====================================== */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    border: 1px solid rgba(204, 102, 0, 0.1);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    width: 100%;
+}
+
+.dashboard-header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dashboard-header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ====================================== */
+/* RESPONSIVE LAYOUT */
+/* ====================================== */
+
+@media (max-width: 768px) {
+    .dashboard-sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        top: -100%;
+        left: 0;
+        right: 0;
+        transition: top 0.3s ease;
+        border-right: none;
+        border-bottom: 2px solid rgba(51, 51, 51, 0.2);
+        max-height: 60vh;
+    }
+
+    .dashboard-sidebar.mobile-active {
+        top: 0;
+    }
+
+    .dashboard-sidebar:hover {
+        width: 100%;
+    }
+
+    .dashboard-main {
+        margin-left: 0;
+        padding-top: 70px;
+    }
+
+    .dashboard-content-container {
+        padding: 20px;
+    }
+
+    .dashboard-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        margin-bottom: 0;
+        border-radius: 0;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-content-container {
+        padding: 15px;
+    }
+}
